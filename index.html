@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -6,23 +7,55 @@
 
   <meta charset="UTF-8">
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Laundry Habits Quiz</title>
 
   <style>
+
+    :root {
+
+      color-scheme: light;
+
+      --bg: #f7f9fc;
+
+      --card: #ffffff;
+
+      --text: #333;
+
+      --muted: #666;
+
+      --border: #d9e0ea;
+
+      --primary: #0078d4;
+
+      --primary-dark: #005fa3;
+
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+    }
+
+ 
+
+    * { box-sizing: border-box; }
+
+ 
 
     body {
 
       font-family: Arial, sans-serif;
 
-      max-width: 700px;
+      max-width: 760px;
 
-      margin: 40px auto;
+      margin: 0 auto;
 
-      padding: 20px;
+      padding: 32px 20px 48px;
 
-      background: #f7f9fc;
+      background: var(--bg);
 
-      color: #333;
+      color: var(--text);
+
+      line-height: 1.5;
 
     }
 
@@ -32,13 +65,125 @@
 
       text-align: center;
 
+      margin-bottom: 8px;
+
+    }
+
+ 
+
+    .intro,
+
+    .helper,
+
+    .counter {
+
+      text-align: center;
+
+    }
+
+ 
+
+    .intro {
+
+      margin-bottom: 8px;
+
+      font-size: 1.05rem;
+
+    }
+
+ 
+
+    .helper {
+
+      color: var(--muted);
+
+      margin-bottom: 24px;
+
+      font-size: 0.95rem;
+
+    }
+
+ 
+
+    form {
+
+      display: grid;
+
+      gap: 16px;
+
     }
 
  
 
     .question {
 
-      margin-bottom: 20px;
+      background: var(--card);
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      padding: 18px;
+
+      box-shadow: var(--shadow);
+
+    }
+
+ 
+
+    .question p {
+
+      margin-top: 0;
+
+      margin-bottom: 12px;
+
+      font-size: 1rem;
+
+    }
+
+ 
+
+    .option {
+
+      display: block;
+
+      margin-bottom: 10px;
+
+      padding: 10px 12px;
+
+      border-radius: 8px;
+
+      transition: background 0.15s ease, border-color 0.15s ease;
+
+      border: 1px solid transparent;
+
+      cursor: pointer;
+
+    }
+
+ 
+
+    .option:hover {
+
+      background: #f2f7fd;
+
+      border-color: #c9ddf2;
+
+    }
+
+ 
+
+    .actions {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      justify-content: center;
+
+      margin-top: 8px;
 
     }
 
@@ -52,13 +197,15 @@
 
       cursor: pointer;
 
-      background: #0078d4;
+      background: var(--primary);
 
       color: white;
 
       border: none;
 
-      border-radius: 6px;
+      border-radius: 8px;
+
+      min-width: 160px;
 
     }
 
@@ -66,7 +213,7 @@
 
     button:hover {
 
-      background: #005fa3;
+      background: var(--primary-dark);
 
     }
 
@@ -74,15 +221,49 @@
 
     #result {
 
-      margin-top: 30px;
+      margin-top: 28px;
 
       padding: 20px;
 
-      border-radius: 8px;
+      border-radius: 12px;
 
-      background: #ffffff;
+      background: var(--card);
 
-      border: 1px solid #ddd;
+      border: 1px solid var(--border);
+
+      box-shadow: var(--shadow);
+
+      display: none;
+
+    }
+
+ 
+
+    .score-badge {
+
+      display: inline-block;
+
+      margin-top: 6px;
+
+      padding: 6px 10px;
+
+      border-radius: 999px;
+
+      background: #eef5fc;
+
+      color: #1e4d7b;
+
+      font-weight: bold;
+
+    }
+
+ 
+
+    .tips {
+
+      margin: 14px 0 0;
+
+      padding-left: 20px;
 
     }
 
@@ -90,13 +271,39 @@
 
     .counter {
 
-      text-align: center;
-
       margin-top: 40px;
 
       font-size: 14px;
 
-      color: #666;
+      color: var(--muted);
+
+    }
+
+ 
+
+    @media (max-width: 600px) {
+
+      body {
+
+        padding: 24px 14px 40px;
+
+      }
+
+ 
+
+      .question {
+
+        padding: 16px;
+
+      }
+
+ 
+
+      button {
+
+        width: 100%;
+
+      }
 
     }
 
@@ -106,251 +313,391 @@
 
 <body>
 
- 
+  <h1>🧺 Laundry Habit Quiz</h1>
 
-<h1>🧺 Laundry Habit Quiz</h1>
+  <p class="intro">
 
-<p style="text-align:center;">
+    Are you a <strong>Laundry Legend</strong> or a <strong>Chaos Goblin</strong>?<br>
 
-  Are you a <strong>Laundry Legend</strong> or a <strong>Chaos Goblin</strong>? 
+    Find out in under 1 minute 👇
 
-  Find out in under 1 minute 👇
+  </p>
 
-</p>
-
- 
-
-<form id="quizForm">
+  <p class="helper">Questions and answer options are shuffled each time so the best choice is less obvious.</p>
 
  
 
-  <div class="question">
+  <form id="quizForm"></form>
 
-    <p><strong>1. How full do you load the machine?</strong></p>
+ 
 
-    <label><input type="radio" name="q1" value="0"> Stuff it full</label><br>
+  <div class="actions">
 
-    <label><input type="radio" name="q1" value="1"> About 3/4 full</label><br>
-
-    <label><input type="radio" name="q1" value="2"> Leave space for movement</label>
+    <button type="button" id="resultButton">See My Result</button>
 
   </div>
 
  
 
-  <div class="question">
+  <div id="result" aria-live="polite"></div>
 
-    <p><strong>2. Do you check care labels?</strong></p>
+ 
 
-    <label><input type="radio" name="q2" value="0"> Never</label><br>
+  <div class="counter">
 
-    <label><input type="radio" name="q2" value="1"> Sometimes</label><br>
-
-    <label><input type="radio" name="q2" value="2"> Usually</label>
+    👀 Page views on this device: <span id="viewCount">0</span>
 
   </div>
 
  
 
-  <div class="question">
+  <script>
 
-    <p><strong>3. Water temperature?</strong></p>
+    const questions = [
 
-    <label><input type="radio" name="q3" value="0"> Hot for everything</label><br>
+      {
 
-    <label><input type="radio" name="q3" value="1"> Warm mostly</label><br>
+        id: "q1",
 
-    <label><input type="radio" name="q3" value="2"> Cold when possible</label>
+        text: "How full do you load the machine?",
 
-  </div>
+        options: [
 
- 
+          { text: "Stuff it full", score: 0 },
 
-  <div class="question">
+          { text: "About 3/4 full", score: 1 },
 
-    <p><strong>4. How do you use detergent?</strong></p>
+          { text: "Leave space for movement", score: 2 }
 
-    <label><input type="radio" name="q4" value="0"> Guess / pour randomly</label><br>
+        ]
 
-    <label><input type="radio" name="q4" value="1"> Rough estimate</label><br>
+      },
 
-    <label><input type="radio" name="q4" value="2"> Measure properly</label>
+      {
 
-  </div>
+        id: "q2",
 
- 
+        text: "Do you check care labels?",
 
-  <div class="question">
+        options: [
 
-    <p><strong>5. Do you sort laundry?</strong></p>
+          { text: "Never", score: 0 },
 
-    <label><input type="radio" name="q5" value="0"> No sorting</label><br>
+          { text: "Sometimes", score: 1 },
 
-    <label><input type="radio" name="q5" value="1"> Some sorting</label><br>
+          { text: "Usually", score: 2 }
 
-    <label><input type="radio" name="q5" value="2"> Sort by colour/fabric</label>
+        ]
 
-  </div>
+      },
 
- 
+      {
 
-  <div class="question">
+        id: "q3",
 
-    <p><strong>6. Drying method?</strong></p>
+        text: "Water temperature?",
 
-    <label><input type="radio" name="q6" value="0"> High heat always</label><br>
+        options: [
 
-    <label><input type="radio" name="q6" value="1"> Mix of dryer & air</label><br>
+          { text: "Hot for everything", score: 0 },
 
-    <label><input type="radio" name="q6" value="2"> Fabric-appropriate drying</label>
+          { text: "Warm mostly", score: 1 },
 
-  </div>
+          { text: "Cold when possible", score: 2 }
 
- 
+        ]
 
-  <div class="question">
+      },
 
-    <p><strong>7. Clean the washing machine?</strong></p>
+      {
 
-    <label><input type="radio" name="q7" value="0"> Never 😬</label><br>
+        id: "q4",
 
-    <label><input type="radio" name="q7" value="1"> Occasionally</label><br>
+        text: "How do you use detergent?",
 
-    <label><input type="radio" name="q7" value="2"> Regularly</label>
+        options: [
 
-  </div>
+          { text: "Guess / pour randomly", score: 0 },
 
- 
+          { text: "Rough estimate", score: 1 },
 
-  <button type="button" onclick="calculateScore()">See My Result</button>
+          { text: "Measure properly", score: 2 }
 
- 
+        ]
 
-</form>
+      },
 
- 
+      {
 
-<div id="result"></div>
+        id: "q5",
 
- 
+        text: "Do you sort laundry?",
 
-<div class="counter">
+        options: [
 
-  👀 Page views: <span id="viewCount">0</span>
+          { text: "No sorting", score: 0 },
 
-</div>
+          { text: "Some sorting", score: 1 },
 
- 
+          { text: "Sort by colour/fabric", score: 2 }
 
-<script>
+        ]
 
-  function calculateScore() {
+      },
 
-    const answers = ["q1","q2","q3","q4","q5","q6","q7"];
+      {
 
-    let total = 0;
+        id: "q6",
 
- 
+        text: "Drying method?",
 
-    for (let q of answers) {
+        options: [
 
-      const selected = document.querySelector(`input[name="${q}"]:checked`);
+          { text: "High heat always", score: 0 },
 
-      if (!selected) {
+          { text: "Mix of dryer & air", score: 1 },
 
-        alert("Please answer all questions!");
+          { text: "Fabric-appropriate drying", score: 2 }
 
-        return;
+        ]
+
+      },
+
+      {
+
+        id: "q7",
+
+        text: "Clean the washing machine?",
+
+        options: [
+
+          { text: "Never 😬", score: 0 },
+
+          { text: "Occasionally", score: 1 },
+
+          { text: "Regularly", score: 2 }
+
+        ]
 
       }
 
-      total += parseInt(selected.value);
+    ];
+
+ 
+
+    function shuffleArray(items) {
+
+      const array = [...items];
+
+      for (let i = array.length - 1; i > 0; i -= 1) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] = [array[j], array[i]];
+
+      }
+
+      return array;
 
     }
 
  
 
-    let resultHTML = "";
+    function renderQuiz() {
 
-   
+      const quizForm = document.getElementById("quizForm");
 
-    if (total <= 5) {
+      const shuffledQuestions = shuffleArray(questions).map((question) => ({
 
-      resultHTML = `
+        ...question,
 
-        <h2>🧦 Laundry Chaos Goblin</h2>
+        options: shuffleArray(question.options)
 
-        <p><strong>Score:</strong> ${total}/14</p>
+      }));
 
-        <p>Your laundry habits need some love. Try smaller loads, measuring detergent, and checking care labels!</p>
+ 
+
+      quizForm.innerHTML = shuffledQuestions.map((question, index) => `
+
+        <fieldset class="question">
+
+          <p><strong>${index + 1}. ${question.text}</strong></p>
+
+          ${question.options.map((option, optionIndex) => `
+
+            <label class="option" for="${question.id}_${optionIndex}">
+
+              <input
+
+                type="radio"
+
+                id="${question.id}_${optionIndex}"
+
+                name="${question.id}"
+
+                value="${option.score}"
+
+              >
+
+              ${option.text}
+
+            </label>
+
+          `).join("")}
+
+        </fieldset>
+
+      `).join("");
+
+ 
+
+      document.getElementById("result").style.display = "none";
+
+      document.getElementById("result").innerHTML = "";
+
+    }
+
+ 
+
+    function calculateScore() {
+
+      const answerIds = questions.map((question) => question.id);
+
+      let total = 0;
+
+ 
+
+      for (const answerId of answerIds) {
+
+        const selected = document.querySelector(`input[name="${answerId}"]:checked`);
+
+        if (!selected) {
+
+          alert("Please answer all questions!");
+
+          return;
+
+        }
+
+        total += Number(selected.value);
+
+      }
+
+ 
+
+      let title = "";
+
+      let summary = "";
+
+      let tips = [];
+
+ 
+
+      if (total <= 5) {
+
+        title = "🧦 Laundry Chaos Goblin";
+
+        summary = "Your laundry habits need some love. Start with a few simple improvements and you’ll get better results fast.";
+
+        tips = [
+
+          "Avoid overloading the machine so clothes can move properly.",
+
+          "Measure detergent instead of free-pouring.",
+
+          "Check care labels before washing anything delicate or new."
+
+        ];
+
+      } else if (total <= 10) {
+
+        title = "🌀 Spin Cycle Survivor";
+
+        summary = "You’re doing okay. A few smarter habits will make your washing gentler on clothes and more efficient overall.";
+
+        tips = [
+
+          "Sort a bit more consistently by colour or fabric.",
+
+          "Use cooler washes when suitable.",
+
+          "Choose drying methods based on fabric type instead of defaulting to high heat."
+
+        ];
+
+      } else {
+
+        title = "✨ Laundry Legend";
+
+        summary = "Nice work! Your laundry habits are efficient and effective. Keep the routine going.";
+
+        tips = [
+
+          "Keep checking labels for special-care items.",
+
+          "Stay consistent with proper load size and detergent use.",
+
+          "Keep cleaning the washing machine regularly to maintain freshness."
+
+        ];
+
+      }
+
+ 
+
+      document.getElementById("result").innerHTML = `
+
+        <h2>${title}</h2>
+
+        <p class="score-badge">Score: ${total}/14</p>
+
+        <p>${summary}</p>
+
+        <ul class="tips">
+
+          ${tips.map((tip) => `<li>${tip}</li>`).join("")}
+
+        </ul>
 
       `;
 
-    } else if (total <= 10) {
+      document.getElementById("result").style.display = "block";
 
-      resultHTML = `
+ 
 
-        <h2>🌀 Spin Cycle Survivor</h2>
+      localStorage.setItem("lastScore", String(total));
 
-        <p><strong>Score:</strong> ${total}/14</p>
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
 
-        <p>You’re doing okay — a few tweaks like better sorting and cooler washes will make a big difference.</p>
+    }
 
-      `;
+ 
+
+    document.getElementById("resultButton").addEventListener("click", calculateScore);
+
+ 
+
+    let views = localStorage.getItem("page_views");
+
+    if (views) {
+
+      views = parseInt(views, 10) + 1;
 
     } else {
 
-      resultHTML = `
-
-        <h2>✨ Laundry Legend</h2>
-
-        <p><strong>Score:</strong> ${total}/14</p>
-
-        <p>Nice work! Your laundry habits are efficient and effective. Keep it up 👏</p>
-
-      `;
+      views = 1;
 
     }
 
- 
+    localStorage.setItem("page_views", views);
 
-    document.getElementById("result").innerHTML = resultHTML;
-
- 
-
-    // Save last score locally
-
-    localStorage.setItem("lastScore", total);
-
-  }
+    document.getElementById("viewCount").innerText = views;
 
  
 
-  // Simple client-side page view counter
+    renderQuiz();
 
-  let views = localStorage.getItem('page_views');
-
- 
-
-  if (views) {
-
-    views = parseInt(views) + 1;
-
-  } else {
-
-    views = 1;
-
-  }
-
- 
-
-  localStorage.setItem('page_views', views);
-
-  document.getElementById('viewCount').innerText = views;
-
-</script>
-
- 
+  </script>
 
 </body>
 
